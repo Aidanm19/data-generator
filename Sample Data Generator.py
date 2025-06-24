@@ -19,10 +19,6 @@ import names
 #   -o          : output to file
 
 
-fnames_list = ['Joe', 'Bob', 'Alice']
-lnames_list = ['Doe', 'Brown', 'Smith']
-
-
 def getInput():
 
     valid_flags = ["-fname", "-lname", "-name", "-ip", "-date", "-timestamp", "-num", "-bool", "-o"]
@@ -50,13 +46,15 @@ def getInput():
                 
                 if arg == "-num":
                     try:
-                        rangeMin = sys.argv[index+1]
-                        rangeMax = sys.argv[index+2]
+                        if index+2 < len(sys.argv): 
+                            rangeMin = sys.argv[index+1]
 
-                        #check if range is valid
+                        if index+2 != len(sys.argv)-1:
+                            rangeMax = sys.argv[index+2]
+
                     except Exception as e:
                         print(e)
-                        print("Please enter a valid range")
+                        print(f"Error with range, using default values")
 
                 elif arg == "-o":
                     try:
@@ -76,13 +74,12 @@ def generateIp():
 
 
 def generateDate():
+    #ISO 8601 --> YYYY-MM-DD
 
     year_min = 1800
     year_max = 2025
 
     months_with_31_days = [1, 3, 5, 7, 8, 10, 12]
-
-    #MM-DD-YYYY
     month = random.randint(1, 12)
 
     if month == 2:
@@ -91,11 +88,19 @@ def generateDate():
         day = random.randint(1, 31)
     else:
         day = random.randint(1, 30)
+    
     year = random.randrange(year_min, year_max)
 
-    return f'{month}-{day}-{year}'
+    return f'{year}-{month}-{day}'
 
-    
+
+def generateTimestamp():
+
+    #ISO 8601 --> YYYY-MM-DD HH:mm:ss
+    date = generateDate()
+    time = f'{random.randint(0, 24)}:{random.randint(0, 60)}:{random.randint(0, 60)}'
+
+    return f'{date}T{time}'
 
 
 def generate(flags_list, rangeMin, rangeMax, filename):
@@ -120,21 +125,29 @@ def generate(flags_list, rangeMin, rangeMax, filename):
             json_output['date'] = generateDate()
 
         elif flag == '-timestamp':
-            json_output['timestamp'] = ''
+            json_output['timestamp'] = generateTimestamp()
 
         elif flag == '-bool':
-            json_output['boolean'] = ''
+            json_output['boolean'] = random.randint(0, 1) == 0
+
+        elif flag == '-num': 
+            json_output['number'] = random.randrange(rangeMin, rangeMax)
+
 
     return json_output
 
 
 
 if __name__ == '__main__':
+    #print(getInput())
+
+    #"""
     flags, num, rangeMin, rangeMax, filename = getInput()
 
     for i in range(int(num)):
 
         output = generate(flags, rangeMin, rangeMax, filename)
         print(output)
+    #"""
     
     
