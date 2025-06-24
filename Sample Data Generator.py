@@ -28,7 +28,7 @@ def getInput():
     #default values
     num = 1 
     rangeMin = 0
-    rangeMax = 1000
+    rangeMax = 100
     filename = None
 
     print("Welcome To The Data Generator\n")
@@ -44,7 +44,8 @@ def getInput():
             if (re.search("^-", arg) and arg in valid_flags):
                 flags.append(arg)
                 
-                if arg == "-num":
+                #special cases for flags
+                if arg == "-num" and sys.argv[index+1] < sys.argv[index+2]:
                     try:
                         rangeMin = sys.argv[index+1]
                         rangeMax = sys.argv[index+2]
@@ -55,20 +56,19 @@ def getInput():
 
                 elif arg == "-o":
                     try:
-                        filename =  sys.argv[index+1]
+                        filename = sys.argv[index+1]
 
                     except Exception as e:
                         print(e)
                         print("Please enter a valid name")
+
+            elif re.search("^-", arg):
+                print(f'Error: flag {arg} not recognized\n')
     else:
         print("No flags or arguments entered")
 
     return flags, num, rangeMin, rangeMax, filename
-
-
-def generateIp():
-    return f'{random.randint(1, 255)}.{random.randint(0, 255)}.{random.randint(0, 255)}.{random.randint(0, 255)}'
-
+    
 
 def generateDate():
     #ISO 8601 --> YYYY-MM-DD
@@ -116,7 +116,7 @@ def generate(flags_list, rangeMin, rangeMax, filename):
             json_output['full_name'] = f'{random.choice(names.fnames)} {random.choice(names.lnames)}'
 
         elif flag == '-ip':
-            json_output['ip'] = generateIp()
+            json_output['ip'] = f'{random.randint(1, 255)}.{random.randint(0, 255)}.{random.randint(0, 255)}.{random.randint(0, 255)}'
 
         elif flag == '-date':
             json_output['date'] = generateDate()
@@ -137,6 +137,8 @@ def generateOutput():
 
     flags, num, rangeMin, rangeMax, filename = getInput()
 
+    print([flags, num, rangeMin, rangeMax, filename])
+
     output = {"sample_data":[]}
 
     for i in range(int(num)):
@@ -156,9 +158,8 @@ def generateOutput():
         output_pretty = json.dumps(output, indent=4)
         print(output_pretty)
 
+    return
 
-if __name__ == '__main__':
-    #print(getInput())
 
-    
+if __name__ == '__main__':    
     generateOutput()
