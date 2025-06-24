@@ -121,8 +121,9 @@ def generateUsername():
 
     numChars_fname = random.randint(1, len(fname))
     numChars_lname = random.randint(0, len(lname))
+    num_digits = random.randint(0, 4)
 
-    return f'{fname[:numChars_fname]}{lname[numChars_lname]}{num}'
+    return f'{fname[:numChars_fname]}{lname[numChars_lname]}{str(num)[:num_digits]}'
 
 
 def generate(flags_list, rangeMin, rangeMax):
