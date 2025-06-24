@@ -130,21 +130,35 @@ def generate(flags_list, rangeMin, rangeMax, filename):
         elif flag == '-num': 
             json_output['number'] = random.randrange(int(rangeMin), int(rangeMax))
 
-
     return json_output
 
+
+def generateOutput():
+
+    flags, num, rangeMin, rangeMax, filename = getInput()
+
+    output = {"sample_data":[]}
+
+    for i in range(int(num)):
+
+        json_object = generate(flags, rangeMin, rangeMax, filename)
+        output['sample_data'].append(json_object)
+    
+    if filename != None:
+
+        path = f'/Users/aidanm/Desktop/{filename}.json'
+        with open(path, 'w') as json_file:
+            json.dump(output, json_file, indent=4)      #indent 4 does prety print
+
+        print(f'wrote file {path}')
+
+    else:
+        output_pretty = json.dumps(output, indent=4)
+        print(output_pretty)
 
 
 if __name__ == '__main__':
     #print(getInput())
 
-    #"""
-    flags, num, rangeMin, rangeMax, filename = getInput()
-
-    for i in range(int(num)):
-
-        output = generate(flags, rangeMin, rangeMax, filename)
-        print(output)
-    #"""
     
-    
+    generateOutput()
