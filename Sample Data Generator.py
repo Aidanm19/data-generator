@@ -197,7 +197,7 @@ def generateOutput():
         if file_format == 'json':
 
             with open(path, 'w') as json_file:
-                json.dump(output, json_file, indent=4)      #indent 4 does prety print
+                json.dump(output, json_file, indent=4)
 
         elif file_format in ['yaml', 'yml']:
 
@@ -218,14 +218,14 @@ def generateOutput():
                 writer.writeheader()
                 for data in output['sample_data']:
                     writer.writerow(data)
-           
-                    
+
+
         print(f'Succesfully wrote to {filename}')
         return   
 
     else:   #print to terminal
 
-        output_pretty = json.dumps(output, indent=4)
+        output_pretty = json.dumps(output, indent=4)    #indent 4 does prety print
         print(output_pretty)
 
     return
