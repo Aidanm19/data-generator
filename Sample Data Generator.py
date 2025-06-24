@@ -75,6 +75,29 @@ def generateIp():
     return f'{random.randint(1, 255)}.{random.randint(0, 255)}.{random.randint(0, 255)}.{random.randint(0, 255)}'
 
 
+def generateDate():
+
+    year_min = 1800
+    year_max = 2025
+
+    months_with_31_days = [1, 3, 5, 7, 8, 10, 12]
+
+    #MM-DD-YYYY
+    month = random.randint(1, 12)
+
+    if month == 2:
+        day = random.randint(1, 28)
+    elif month in months_with_31_days:
+        day = random.randint(1, 31)
+    else:
+        day = random.randint(1, 30)
+    year = random.randrange(year_min, year_max)
+
+    return f'{month}-{day}-{year}'
+
+    
+
+
 def generate(flags_list, rangeMin, rangeMax, filename):
 
     json_output = {}
@@ -94,7 +117,7 @@ def generate(flags_list, rangeMin, rangeMax, filename):
             json_output['ip'] = generateIp()
 
         elif flag == '-date':
-            json_output['date'] = ''
+            json_output['date'] = generateDate()
 
         elif flag == '-timestamp':
             json_output['timestamp'] = ''
