@@ -71,6 +71,9 @@ def getInput():
     return flags, num, rangeMin, rangeMax, filename
 
 
+def generateIp():
+    return f'{random.randint(1, 255)}.{random.randint(0, 255)}.{random.randint(0, 255)}.{random.randint(0, 255)}'
+
 
 def generate(flags_list, rangeMin, rangeMax, filename):
 
@@ -88,7 +91,7 @@ def generate(flags_list, rangeMin, rangeMax, filename):
             json_output['full_name'] = f'{random.choice(names.fnames)} {random.choice(names.lnames)}'
 
         elif flag == '-ip':
-            json_output['ip'] = ''
+            json_output['ip'] = generateIp()
 
         elif flag == '-date':
             json_output['date'] = ''
