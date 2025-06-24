@@ -3,6 +3,9 @@
 import json
 import sys
 import re
+import random
+
+import names
 
 #Flag specifications
 #   -fname      : first name
@@ -14,6 +17,10 @@ import re
 #   -num        : number (specify range?)
 #   -bool       : boolean
 #   -o          : output to file
+
+
+fnames_list = ['Joe', 'Bob', 'Alice']
+lnames_list = ['Doe', 'Brown', 'Smith']
 
 
 def getInput():
@@ -58,28 +65,27 @@ def getInput():
                     except Exception as e:
                         print(e)
                         print("Please enter a valid name")
-
-
     else:
         print("No flags or arguments entered")
 
     return flags, num, rangeMin, rangeMax, filename
 
 
-def match_flags(flags_list):
+
+def generate(flags_list, rangeMin, rangeMax, filename):
 
     json_output = {}
 
     for flag in flags_list:
 
         if flag == "-fname":
-            json_output['first_name'] = ''
+            json_output['first_name'] = random.choice(names.fnames)
 
         elif flag == '-lname':
-            json_output['last_name'] = ''
+            json_output['last_name'] = random.choice(lnames_list)
 
         elif flag == '-name':
-            json_output['full_name'] = ''
+            json_output['full_name'] = f'{random.choice(fnames_list)} {random.choice(lnames_list)}'
 
         elif flag == '-ip':
             json_output['ip'] = ''
@@ -97,18 +103,12 @@ def match_flags(flags_list):
 
 
 
-
-def generate(json_output, num, rangeMin, rangeMax, filename):
-
-
-    return 
-
-
-
 if __name__ == '__main__':
     flags, num, rangeMin, rangeMax, filename = getInput()
 
-    output = match_flags(flags)
+    for i in range(int(num)):
 
-    print(output)
-
+        output = generate(flags, rangeMin, rangeMax, filename)
+        print(output)
+    
+    
