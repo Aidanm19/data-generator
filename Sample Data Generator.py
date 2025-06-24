@@ -82,10 +82,10 @@ def generate(flags_list, rangeMin, rangeMax, filename):
             json_output['first_name'] = random.choice(names.fnames)
 
         elif flag == '-lname':
-            json_output['last_name'] = random.choice(lnames_list)
+            json_output['last_name'] = random.choice(names.lnames)
 
         elif flag == '-name':
-            json_output['full_name'] = f'{random.choice(fnames_list)} {random.choice(lnames_list)}'
+            json_output['full_name'] = f'{random.choice(names.fnames)} {random.choice(names.lnames)}'
 
         elif flag == '-ip':
             json_output['ip'] = ''
