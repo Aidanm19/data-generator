@@ -31,7 +31,18 @@ def getInput():
     rangeMax = 100
     filename = None
 
-    print("Welcome To The Data Generator\n")
+    #print("Welcome To The Data Generator\n")
+    print(
+        "  ________              ____        __                 \n"
+        " /_  __/ /_  ___       / __ \____ _/ /_____ _          \n"
+        "  / / / __ \/ _ \     / / / / __ `/ __/ __ `/          \n"
+        " / / / / / /  __/    / /_/ / /_/ / /_/ /_/ /           \n"
+        "/_/_/_/_/_/\___/    /_____/\__,_/\__/\__,_/            \n"
+        "  / ____/__  ____  ___  _________ _/ /_____  _____     \n"
+        " / / __/ _ \/ __ \/ _ \/ ___/ __ `/ __/ __ \/ ___/     \n"
+        "/ /_/ /  __/ / / /  __/ /  / /_/ / /_/ /_/ / /         \n"
+        "\____/\___/_/ /_/\___/_/   \__,_/\__/\____/_/          \n"
+    )
 
     if len(sys.argv) > 1:
 
@@ -137,7 +148,10 @@ def generateOutput():
 
     flags, num, rangeMin, rangeMax, filename = getInput()
 
-    print([flags, num, rangeMin, rangeMax, filename])
+    #print([flags, num, rangeMin, rangeMax, filename])
+
+    if (len(flags) == 0):
+        return
 
     output = {"sample_data":[]}
 
