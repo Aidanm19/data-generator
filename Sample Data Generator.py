@@ -1,10 +1,13 @@
 #Sample Data Generator
 
+#Libraries
 import json
 import sys
 import re
 import random
+import csv
 
+#Files
 import names
 
 #Flag specifications
@@ -184,15 +187,42 @@ def generateOutput():
         json_object = generate(flags, rangeMin, rangeMax)
         output['sample_data'].append(json_object)
     
-    if filename != None:
+    if filename != None:    #write to file
 
-        path = f'/Users/aidanm/Desktop/{filename}.json'
-        with open(path, 'w') as json_file:
-            json.dump(output, json_file, indent=4)      #indent 4 does prety print
+        file_format = filename.split('.')[1]
+        path = f'/Users/aidanm/Desktop/{filename}'
 
-        print(f'wrote file {path}')
+        #Write JSON File
+        if file_format == 'json':
 
-    else:
+            with open(path, 'w') as json_file:
+                json.dump(output, json_file, indent=4)      #indent 4 does prety print
+
+            return
+
+
+        elif file_format in ['yaml', 'yml']:
+            pass
+
+
+        elif file_format == 'csv':
+
+            with open(path, 'w', newline='') as csv_file:
+
+                fieldnames = []
+                keys = output['sample_data'][0].keys()
+                for key in keys: 
+                    fieldnames.append(key)
+
+                writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+                writer.writeheader()
+                for data in output['sample_data']:
+                    writer.writerow(data)
+                    
+            return    
+
+    else:   #print to terminal
+
         output_pretty = json.dumps(output, indent=4)
         print(output_pretty)
 
@@ -201,3 +231,19 @@ def generateOutput():
 
 if __name__ == '__main__':    
     generateOutput()
+
+    """
+                keys = output['sample_data'][0].keys()
+                keys_str = ''
+                for key in keys: keys_str = keys_str + key + ','
+                print(keys_str.strip(','))
+
+                for jsonObj in output['sample_data']:
+                    data_str = ''
+
+                    for data in jsonObj.values():
+                        #print(data)
+                        data_str = data_str + data + ','
+                
+                    print(data_str.strip(','))
+                """
