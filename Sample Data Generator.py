@@ -1,5 +1,6 @@
 #Sample Data Generator
 
+import json
 import sys
 import re
 
@@ -65,10 +66,49 @@ def getInput():
     return flags, num, rangeMin, rangeMax, filename
 
 
-def generate(flags_list, num, rangeMin, rangeMax, filename):
+def match_flags(flags_list):
 
     json_output = {}
+
+    for flag in flags_list:
+
+        if flag == "-fname":
+            json_output['first_name'] = ''
+
+        elif flag == '-lname':
+            json_output['last_name'] = ''
+
+        elif flag == '-name':
+            json_output['full_name'] = ''
+
+        elif flag == '-ip':
+            json_output['ip'] = ''
+
+        elif flag == '-date':
+            json_output['date'] = ''
+
+        elif flag == '-timestamp':
+            json_output['timestamp'] = ''
+
+        elif flag == '-bool':
+            json_output['boolean'] = ''
+
+    return json_output
+
+
+
+
+def generate(json_output, num, rangeMin, rangeMax, filename):
+
+
     return 
 
+
+
 if __name__ == '__main__':
-    print(getInput())
+    flags, num, rangeMin, rangeMax, filename = getInput()
+
+    output = match_flags(flags)
+
+    print(output)
+
