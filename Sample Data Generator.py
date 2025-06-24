@@ -21,8 +21,6 @@ import names
 
 def getInput():
 
-    valid_flags = ["-fname", "-lname", "-name", "-ip", "-date", "-timestamp", "-num", "-bool", "-o"]
-
     flags = []
 
     #default values
@@ -52,7 +50,7 @@ def getInput():
 
         for index, arg in enumerate(sys.argv):
 
-            if (re.search("^-", arg) and arg in valid_flags):
+            if (re.search("^-", arg)):
                 flags.append(arg)
                 
                 #special cases for flags
@@ -111,7 +109,23 @@ def generateTimestamp():
     return f'{date}T{time}'
 
 
-def generate(flags_list, rangeMin, rangeMax, filename):
+def generateUID():
+    return
+
+
+def generateUsername():
+
+    fname = random.choice(names.fnames)
+    lname = random.choice(names.lnames)
+    num = random.randint(1, 9999)
+
+    numChars_fname = random.randint(1, len(fname))
+    numChars_lname = random.randint(0, len(lname))
+
+    return f'{fname[:numChars_fname]}{lname[numChars_lname]}{num}'
+
+
+def generate(flags_list, rangeMin, rangeMax):
 
     json_output = {}
 
@@ -141,6 +155,9 @@ def generate(flags_list, rangeMin, rangeMax, filename):
         elif flag == '-num': 
             json_output['number'] = random.randrange(int(rangeMin), int(rangeMax))
 
+        elif flag == '-uname':
+            json_output['username'] = generateUsername()
+
     return json_output
 
 
@@ -157,7 +174,7 @@ def generateOutput():
 
     for i in range(int(num)):
 
-        json_object = generate(flags, rangeMin, rangeMax, filename)
+        json_object = generate(flags, rangeMin, rangeMax)
         output['sample_data'].append(json_object)
     
     if filename != None:
