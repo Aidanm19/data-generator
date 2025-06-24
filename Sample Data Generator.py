@@ -46,11 +46,8 @@ def getInput():
                 
                 if arg == "-num":
                     try:
-                        if index+2 < len(sys.argv): 
-                            rangeMin = sys.argv[index+1]
-
-                        if index+2 != len(sys.argv)-1:
-                            rangeMax = sys.argv[index+2]
+                        rangeMin = sys.argv[index+1]
+                        rangeMax = sys.argv[index+2]
 
                     except Exception as e:
                         print(e)
@@ -131,7 +128,7 @@ def generate(flags_list, rangeMin, rangeMax, filename):
             json_output['boolean'] = random.randint(0, 1) == 0
 
         elif flag == '-num': 
-            json_output['number'] = random.randrange(rangeMin, rangeMax)
+            json_output['number'] = random.randrange(int(rangeMin), int(rangeMax))
 
 
     return json_output
