@@ -123,7 +123,13 @@ def generateUsername():
     numChars_lname = random.randint(0, len(lname))
     num_digits = random.randint(0, 4)
 
-    return f'{fname[:numChars_fname]}{lname[numChars_lname]}{str(num)[:num_digits]}'
+    uname = f'{fname[:numChars_fname]}{lname[:numChars_lname]}{str(num)[:num_digits]}'
+    if len(uname) < 4:
+        
+        for i in range(len(uname)):
+            uname = uname + chr(random.randrange(65, 90))       #add random uppercase letters if uname is not long enough
+
+    return uname
 
 
 def generate(flags_list, rangeMin, rangeMax):
