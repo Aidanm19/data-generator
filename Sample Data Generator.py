@@ -6,6 +6,7 @@ import sys
 import re
 import random
 import csv
+import yaml
 
 #Files
 import names
@@ -192,19 +193,18 @@ def generateOutput():
         file_format = filename.split('.')[1]
         path = f'/Users/aidanm/Desktop/{filename}'
 
-        #Write JSON File
+        #Write JSON file
         if file_format == 'json':
 
             with open(path, 'w') as json_file:
                 json.dump(output, json_file, indent=4)      #indent 4 does prety print
 
-            return
-
-
         elif file_format in ['yaml', 'yml']:
-            pass
 
-
+            with open(path, 'w') as yamlfile:
+                yaml.dump(output, yamlfile)
+      
+        #Write to CSV file
         elif file_format == 'csv':
 
             with open(path, 'w', newline='') as csv_file:
@@ -218,8 +218,10 @@ def generateOutput():
                 writer.writeheader()
                 for data in output['sample_data']:
                     writer.writerow(data)
+           
                     
-            return    
+        print(f'Succesfully wrote to {filename}')
+        return   
 
     else:   #print to terminal
 
@@ -231,19 +233,3 @@ def generateOutput():
 
 if __name__ == '__main__':    
     generateOutput()
-
-    """
-                keys = output['sample_data'][0].keys()
-                keys_str = ''
-                for key in keys: keys_str = keys_str + key + ','
-                print(keys_str.strip(','))
-
-                for jsonObj in output['sample_data']:
-                    data_str = ''
-
-                    for data in jsonObj.values():
-                        #print(data)
-                        data_str = data_str + data + ','
-                
-                    print(data_str.strip(','))
-                """
