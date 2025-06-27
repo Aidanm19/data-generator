@@ -190,7 +190,11 @@ def generateOutput():
     
     if filename != None:    #write to file
 
-        file_format = filename.split('.')[1]
+        if '.' in filename:
+            file_format = filename.split('.')[1]
+        else:
+            file_format = None
+            
         path = f'/Users/aidanm/Desktop/{filename}'
 
         #Write JSON file
@@ -199,11 +203,16 @@ def generateOutput():
             with open(path, 'w') as json_file:
                 json.dump(output, json_file, indent=4)
 
+            print(f'Succesfully wrote to {filename}')
+
+        #Write to YAML
         elif file_format in ['yaml', 'yml']:
 
             with open(path, 'w') as yamlfile:
                 yaml.dump(output, yamlfile)
       
+            print(f'Succesfully wrote to {filename}')
+
         #Write to CSV file
         elif file_format == 'csv':
 
@@ -219,8 +228,15 @@ def generateOutput():
                 for data in output['sample_data']:
                     writer.writerow(data)
 
+            print(f'Succesfully wrote to {filename}')
 
-        print(f'Succesfully wrote to {filename}')
+        else:
+            if file_format == None:
+                print('Error: No file format specified')
+            else:
+                print(f'Error: File format for {filename} is not supported')
+
+
         return   
 
     else:   #print to terminal
