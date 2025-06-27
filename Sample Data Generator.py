@@ -104,7 +104,7 @@ def generateDate():
 
 def generateTimestamp():
     #ISO 8601 --> YYYY-MM-DD HH:mm:ss
-    
+
     date = generateDate()
     time = f'{random.randint(0, 24)}:{random.randint(0, 60)}:{random.randint(0, 60)}'
 
@@ -182,6 +182,10 @@ def generateOutput():
     for i in range(int(num)):
 
         json_object = generate(flags, rangeMin, rangeMax)
+        if len(json_object) == 0:       #nothing being output
+            print('Error: The flags you have entered are not supported')
+            return
+
         output['sample_data'].append(json_object)
     
     if filename != None:    #write to file
