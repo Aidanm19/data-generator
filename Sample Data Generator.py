@@ -75,8 +75,6 @@ def getInput():
                         print(e)
                         print("Please enter a valid name")
 
-            elif re.search("^-", arg):
-                print(f'Error: flag {arg} not recognized\n')
     else:
         print("No flags or arguments entered")
 
@@ -105,8 +103,8 @@ def generateDate():
 
 
 def generateTimestamp():
-
     #ISO 8601 --> YYYY-MM-DD HH:mm:ss
+    
     date = generateDate()
     time = f'{random.randint(0, 24)}:{random.randint(0, 60)}:{random.randint(0, 60)}'
 
@@ -152,7 +150,7 @@ def generate(flags_list, rangeMin, rangeMax):
             json_output['full_name'] = f'{random.choice(names.fnames)} {random.choice(names.lnames)}'
 
         elif flag == '-ip':
-            json_output['ip'] = f'{random.randint(1, 255)}.{random.randint(0, 255)}.{random.randint(0, 255)}.{random.randint(0, 255)}'
+            json_output['ip'] = f'{random.randint(0, 255)}.{random.randint(0, 255)}.{random.randint(0, 255)}.{random.randint(0, 255)}'
 
         elif flag == '-date':
             json_output['date'] = generateDate()
@@ -176,8 +174,6 @@ def generateOutput():
 
     flags, num, rangeMin, rangeMax, filename = getInput()
 
-    #print([flags, num, rangeMin, rangeMax, filename])
-
     if (len(flags) == 0):
         return
 
@@ -194,7 +190,7 @@ def generateOutput():
             file_format = filename.split('.')[1]
         else:
             file_format = None
-            
+
         path = f'/Users/aidanm/Desktop/{filename}'
 
         #Write JSON file
@@ -236,8 +232,8 @@ def generateOutput():
             else:
                 print(f'Error: File format for {filename} is not supported')
 
-
         return   
+
 
     else:   #print to terminal
 
